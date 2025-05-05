@@ -1,23 +1,146 @@
-<header>
-  <h1>{{ title }}</h1>
-  <nav *ngIf="authService.isLoggedIn()">
-    <a routerLink="/dashboard">Dashboard</a>
-    <span *ngIf="authService.hasRole('super-admin')">
-      <a routerLink="/admin">Admin</a>
-    </span>
-    <span *ngIf="authService.hasRole('client')">
-      <a routerLink="/client">Client Portal</a>
-    </span>
-    <span *ngIf="authService.hasRole('entry-operator')">
-      <a routerLink="/entry">Entry Gate</a>
-    </span>
-    <span *ngIf="authService.hasRole('exit-operator')">
-      <a routerLink="/exit">Exit Gate</a>
-    </span>
-    <button (click)="authService.logout()">Logout</button>
+<header class="navbar">
+  <img
+    src="https://parkese.com/static/media/headerlogo.9993fd00f0b16ed8aa8cc6f48ae28981.svg"
+    alt="Parkese Logo"
+    class="logo"
+  />
+  <nav>
+    <ul class="nav-links">
+      <li>
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+      </li>
+      <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+      <li><a routerLink="/pricing" routerLinkActive="active">Pricing</a></li>
+      <li>
+        <a class="btn btn-outline-primary" (click)="openModal()">Login</a>
+      </li>
+    </ul>
   </nav>
 </header>
 
 <main>
   <router-outlet></router-outlet>
 </main>
+
+<div class="modal" #loginModal tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <div class="text-center mb-4">
+          <h4 class="modal-title fw-bold" id="authModalTitle">Welcome Back!</h4>
+          <button
+            type="button"
+            class="btn-close position-absolute top-0 end-0 m-3"
+            (click)="closeModal()"
+            data-bs-dismiss="modal"
+            aria-label="close"
+          ></button>
+        </div>
+        @if (isLoginFormVisible()) {
+        <form id="loginForm" class="needs-validation">
+          <div class="mb-3">
+            <input
+              type="email"
+              [(ngModel)]="loginObj.email"
+              name="email"
+              class="form-control"
+              placeholder="Email"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <input
+              type="password"
+              [(ngModel)]="loginObj.password"
+              name="password"
+              class="form-control"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary w-100 mb-3"
+            (click)="onLogin()"
+          >
+            Login
+          </button>
+          <p class="text-center">
+            Don't have an account?
+            <a
+              id="showSignup"
+              class="text-decoration-none"
+              (click)="toggleForm()"
+              >Sign Up</a
+            >
+          </p>
+        </form>
+        } @else {
+        <form id="signupForm" class="needs-validation cursor-pointer">
+          <div class="mb-3">
+            <input
+              type="text"
+              [(ngModel)]="registerObj.name"
+              name="name"
+              class="form-control"
+              placeholder="Full Name"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <input
+              type="email"
+              [(ngModel)]="registerObj.email"
+              name="email"
+              class="form-control"
+              placeholder="Email"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <input
+              type="password"
+              [(ngModel)]="registerObj.password"
+              name="password"
+              class="form-control"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <input
+              type="password"
+              [(ngModel)]="registerObj.confirmPassword"
+              name="confirmPassword"
+              class="form-control"
+              placeholder="Confirm Password"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary w-100 mb-3"
+            (click)="onRegister()"
+          >
+            Sign Up
+          </button>
+          <p class="text-center">
+            Already have an account?
+            <a
+              id="showLogin"
+              class="text-decoration-none"
+              (click)="toggleForm()"
+              >Login</a
+            >
+          </p>
+        </form>
+        }
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,142 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-:host {
-  display: block;
-}
-
-.hero-section {
-  background-image: url('assets/images/background.svg');
-  background-size: cover;
-  background-position: center;
+.hero {
+  padding: 4rem 3rem;
+  background-image: url('https://parkese.com/static/media/background.0e59d7dfbf64139967fc750be565ec0d.svg');
   background-repeat: no-repeat;
-  min-height: 100vh;
-  color: #fff;
-  font-family: 'Poppins', sans-serif;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 0;
-  }
-
-  .container {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-}
-
-header {
+  background-size: cover;
+  background-position: right;
+  min-height: 80vh;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 30px 0;
-
-  .logo-container {
-    .logo {
-      height: 40px;
-      width: auto;
-    }
-  }
-
-  nav {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-
-    .nav-link {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 16px;
-      transition: color 0.3s ease;
-
-      &:hover {
-        color: #4CAF50;
-      }
-
-      &.enquire-button {
-        background-color: #4CAF50;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-weight: 600;
-
-        &:hover {
-          background-color: #3e8e41;
-          color: #fff;
-        }
-      }
-    }
-  }
 }
 
-.hero-content {
-  max-width: 700px;
-  margin-top: 100px;
-  padding-bottom: 100px;
-
-  h1 {
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 20px;
-
-    .brand-name {
-      color: #4CAF50;
-    }
-  }
-
-  .subtitle {
-    font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 30px;
-    opacity: 0.9;
-  }
-
-  .cta-button {
-    display: inline-block;
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 15px 30px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #3e8e41;
-    }
-  }
+.hero-text h1 {
+  font-size: 2.8rem;
+  line-height: 1.3;
 }
 
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    padding: 20px 0;
+.brand {
+  color: #cc1b94;
+  font-weight: 800;
+}
 
-    nav {
-      margin-top: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-  }
+.hero-text p {
+  margin-top: 1rem;
+  color: #555;
+  font-size: 1rem;
+  max-width: 80%;
+}
 
-  .hero-content {
-    margin-top: 50px;
-    text-align: center;
-
-    h1 {
-      font-size: 36px;
-    }
-  }
+.enquire-btn {
+  margin-top: 2rem;
+  padding: 0.5rem 1.2rem;
+  background-color: #00473e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
