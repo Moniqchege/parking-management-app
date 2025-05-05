@@ -7,16 +7,21 @@ import { roleGuard } from './core/guards/role.guard';
 import { ClientPortalComponent } from './components/client-portal/client-portal.component';
 import { EntryGateComponent } from './components/entry-gate/entry-gate.component';
 import { ExitGateComponent } from './components/exit-gate/exit-gate.component';
+import { LandingComponent } from './components/landing/landing.component';
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/login',
+        redirectTo: '/landing',
         pathMatch: 'full'
     },
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+      path: 'landing',
+      component: LandingComponent
     },
     {
         path: 'dashboard',
