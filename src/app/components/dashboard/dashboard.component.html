@@ -1,0 +1,4 @@
+<h2>Dashboard</h2>
+    <div *ngIf="authService.getCurrentUser() as user">
+      <p>Welcome, {{ user.name }} ({{ user.role }})</p>
+    </div>

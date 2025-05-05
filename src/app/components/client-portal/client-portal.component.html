@@ -1,0 +1,52 @@
+<h2>Client Portal</h2>
+    
+<div *ngIf="authService.getCurrentUser() as user">
+  <p>Welcome, {{ user.name }}</p>
+</div>
+
+<section>
+  <h3>My Parking Sites</h3>
+  <div *ngFor="let site of mySites">
+    <h4>{{ site.name }}</h4>
+    <p>{{ site.address }}</p>
+    
+    <div *ngFor="let building of getBuildingsForSite(site.id)">
+      <h5>{{ building.name }}</h5>
+      <table>
+        <thead>
+          <tr>
+            <th>Floor</th>
+            <th>Total Spaces</th>
+            <th>Occupied</th>
+            <th>Available</th>
+            <th>Occupancy Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let floor of building.floors">
+            <td>{{ floor.floorNumber }}</td>
+            <td>{{ floor.totalSpaces }}</td>
+            <td>{{ floor.occupiedSpaces }}</td>
+            <td>{{ floor.totalSpaces - floor.occupiedSpaces }}</td>
+            <td>{{ (floor.occupiedSpaces / floor.totalSpaces * 100).toFixed(1) }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="authService.hasRole('client')">
+  <h3>Add New Parking Site</h3>
+  <form (ngSubmit)="addParkingSite()">
+    <div>
+      <label for="siteName">Site Name:</label>
+      <input id="siteName" [(ngModel)]="newSite.name" name="name" required>
+    </div>
+    <div>
+      <label for="address">Address:</label>
+      <input id="address" [(ngModel)]="newSite.address" name="address" required>
+    </div>
+    <button type="submit">Add Site</button>
+  </form>
+</section>

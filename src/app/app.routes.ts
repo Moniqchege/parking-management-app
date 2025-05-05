@@ -1,3 +1,54 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { authGuard } from './core/guards/auth.guard';
+import { AdminComponent } from './components/admin/admin.component';
+import { roleGuard } from './core/guards/role.guard';
+import { ClientPortalComponent } from './components/client-portal/client-portal.component';
+import { EntryGateComponent } from './components/entry-gate/entry-gate.component';
+import { ExitGateComponent } from './components/exit-gate/exit-gate.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+    {
+        path: '',
+        redirectTo: '/login',
+        pathMatch: 'full'
+    },
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: 'dashboard',
+        component: DashboardComponent, 
+        canActivate: [authGuard]
+    },
+    {
+        path: 'admin',
+        component: AdminComponent,
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['super-admin']}
+    },
+    { 
+        path: 'client', 
+        component: ClientPortalComponent, 
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['client', 'super-admin'] }
+      },
+      { 
+        path: 'entry', 
+        component: EntryGateComponent, 
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['entry-operator'] }
+      },
+      { 
+        path: 'exit', 
+        component: ExitGateComponent, 
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['exit-operator'] }
+      },
+      {
+        path: '**',
+        redirectTo: '/login'
+      }
+];

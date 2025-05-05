@@ -1,0 +1,39 @@
+<h2>Exit Gate</h2>
+    
+    <div *ngIf="authService.getCurrentUser() as user">
+      <p>Welcome, {{ user.name }}</p>
+    </div>
+
+    <form (ngSubmit)="processExit()">
+      <div>
+        <label for="licensePlate">License Plate:</label>
+        <input id="licensePlate" [(ngModel)]="licensePlate" name="licensePlate" required>
+      </div>
+      <button type="submit">Find Vehicle</button>
+    </form>
+
+    <div *ngIf="activeSession">
+      <h3>Parking Details</h3>
+      <p>License Plate: {{ activeSession.vehicleId }}</p>
+      <p>Entry Time: {{ activeSession.entryTime | date:'medium' }}</p>
+      <p>Duration: {{ calculateDuration() }}</p>
+      <p>Rate: {{ currentRate | currency }}</p>
+      <p>Total Due: {{ calculateTotal() | currency }}</p>
+      
+      <div>
+        <label>Payment Method:</label>
+        <select [(ngModel)]="paymentMethod" name="paymentMethod" aria-label="Payment Method">
+          <option value="cash">Cash</option>
+          <option value="card">Credit Card</option>
+          <option value="mobile">Mobile Payment</option>
+        </select>
+      </div>
+      
+      <button (click)="completeExit()">Complete Exit</button>
+    </div>
+
+    <div *ngIf="exitCompleted">
+      <h3>Exit Completed</h3>
+      <p>Receipt Number: {{ receiptNumber }}</p>
+      <p>Amount Paid: {{ amountPaid | currency }}</p>
+    </div>

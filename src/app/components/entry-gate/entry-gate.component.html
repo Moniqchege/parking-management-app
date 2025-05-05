@@ -1,0 +1,34 @@
+<h2>Entry Gate</h2>
+    
+    <div *ngIf="authService.getCurrentUser() as user">
+      <p>Welcome, {{ user.name }}</p>
+    </div>
+
+    <form (ngSubmit)="registerEntry()">
+      <div>
+        <label for="licensePlate">License Plate:</label>
+        <input id="licensePlate" [(ngModel)]="licensePlate" name="licensePlate" required>
+      </div>
+      <div>
+        <label for="vehicleType">Vehicle Type:</label>
+        <select id="vehicleType" [(ngModel)]="vehicleTypeId" name="vehicleType" required>
+          <option *ngFor="let type of vehicleTypes" [value]="type.id">{{ type.name }}</option>
+        </select>
+      </div>
+      <div>
+        <label for="parkingSpace">Parking Space:</label>
+        <select id="parkingSpace" [(ngModel)]="spaceId" name="spaceId" required>
+          <option *ngFor="let space of availableSpaces" [value]="space.id">
+            {{ getSpaceDescription(space) }}
+          </option>
+        </select>
+      </div>
+      <button type="submit">Register Entry</button>
+    </form>
+
+    <div *ngIf="lastEntry">
+      <h3>Last Entry Registered</h3>
+      <p>License Plate: {{ lastEntry.vehicleId }}</p>
+      <p>Space: {{ getSpaceDescriptionById(lastEntry.spaceId) }}</p>
+      <p>Time: {{ lastEntry.entryTime | date:'medium' }}</p>
+    </div>
