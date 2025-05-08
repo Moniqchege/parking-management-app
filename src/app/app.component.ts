@@ -4,10 +4,11 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
 import { User } from './core/models/parking.model';
 import { FormsModule } from '@angular/forms';
+import { LandingComponent } from "./components/landing/landing.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, RouterModule, FormsModule],
+  imports: [RouterOutlet, CommonModule, RouterModule, FormsModule, LandingComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

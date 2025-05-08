@@ -1,47 +1,97 @@
 <main class="hero">
+  <button class="sidebar-toggle" (click)="toggleSidebar()">⋮</button>
+
   <div class="hero-text">
     <h1>Discover seamless <br />parking solutions with</h1>
     <h1 class="brand">Parkese</h1>
     <p>Say goodbye to parking stress and embrace effortless convenience.</p>
-    <p> Unlock hassle-free parking experiences with our convenient online platform.</p>
+    <p>
+      Unlock hassle-free parking experiences with our convenient online
+      platform.
+    </p>
   </div>
+
   <div class="parking-card-container">
     <div class="parking-card">
       <div class="sidebar">
         <div class="sidebar-header">
-          <div class="active-tab">Parking</div>
+          <div class="active-tab">Parkese</div>
         </div>
         <ul>
-          <li class="daily">🚗 Daily Parking<br><small>Only one day</small></li>
-          <li class="blurred">📅 Seasonal Parking<br><small>Specific duration</small></li>
-          <li class="blurred">🅿️ Reserved Parking<br><small>Apply for special parking</small></li>
+          <li (click)="selectParkingType('daily')">
+            🚗 Daily Parking<br /><small>Only one day</small>
+          </li>
+          <li (click)="selectParkingType('seasonal')">
+            📅 Seasonal Parking<br /><small>Specific duration</small>
+          </li>
+          <li (click)="selectParkingType('reserved')">
+            🅿️ Reserved Parking<br /><small>Apply for special parking</small>
+          </li>
         </ul>
       </div>
-  
-      <div class="form-section">
+
+      <div class="right-panel">
         <div class="form-navbar">
-          <span class="form-tab active">🚗 Daily Parking</span>
+          <h5>{{ getHeading() }}</h5>
+          
         </div>
-        <h5>{{ getHeading() }}</h5>
-        <p *ngIf="selectedType === 'daily'">Correctly fill the following to pay for <strong>Daily Parking</strong></p>
-        <p *ngIf="selectedType !== 'daily' && !isLoggedIn">
-          You need to <a (click)="openLoginModal()">login</a> to access {{ selectedType }} parking.
-        </p>
-  
-        <form *ngIf="selectedType === 'daily' || isLoggedIn" (ngSubmit)="submitForm()">
-          <label>Enter Vehicle Number Plate</label>
-          <input type="text" placeholder="e.g KZY 123 Z" [(ngModel)]="vehicleNumber" name="vehicleNumber" required />
-  
-          <label>Parking Zone</label>
-          <select [(ngModel)]="parkingZone" name="parkingZone" aria-label="Parking Zone" required>
-            <option value="" disabled>Select parking zone</option>
-            <option *ngFor="let zone of zones" [value]="zone">{{ zone }}</option>
-          </select>
-  
-          <button type="submit">Next</button>
-        </form>
+
+        <div class="form-section">
+          <div class="form-inner">
+            <p *ngIf="selectedType === 'daily'">
+              Correctly fill the following to pay for
+              <strong>Daily Parking</strong>
+            </p>
+            <p *ngIf="selectedType !== 'daily' && !isLoggedIn">
+              You need to <a (click)="triggerLogin.emit()">login</a> to access
+              {{ selectedType }} parking.
+            </p>
+
+            <!-- Form shown only if it's Daily or user is logged in -->
+            <form
+              *ngIf="selectedType === 'daily' || isLoggedIn"
+              (ngSubmit)="submitForm()"
+            >
+              <label>Enter Vehicle Number Plate</label>
+              <input
+                type="text"
+                placeholder="e.g KAA 123A"
+                [(ngModel)]="vehicleNumber"
+                name="vehicleNumber"
+                required
+              />
+
+              <label>Vehicle Type</label>
+              <select
+                [(ngModel)]="vehicleType"
+                name="vehicleType"
+                aria-label="vehicleType"
+                required
+              >
+                <option value="" disabled selected>Select vehicle type</option>
+                <option *ngFor="let type of vehicleTypes" [value]="type">
+                  {{ type }}
+                </option>
+              </select>
+
+              <label>Parking Zone</label>
+              <select
+                [(ngModel)]="parkingZone"
+                name="parkingZone"
+                aria-label="Parking Zone"
+                required
+              >
+                <option value="" disabled selected>Select parking zone</option>
+                <option *ngFor="let zone of zones" [value]="zone">
+                  {{ zone }}
+                </option>
+              </select>
+
+              <button type="submit">Next</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  
 </main>
