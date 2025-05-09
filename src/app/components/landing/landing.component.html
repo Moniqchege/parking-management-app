@@ -13,7 +13,7 @@
 
   <div class="parking-card-container">
     <div class="parking-card">
-      <div class="sidebar">
+      <div class="sidebar" [class.open]="sidebarOpen">
         <div class="sidebar-header">
           <div class="active-tab">Parkese</div>
         </div>
@@ -33,12 +33,11 @@
       <div class="right-panel">
         <div class="form-navbar">
           <h5>{{ getHeading() }}</h5>
-          
         </div>
 
         <div class="form-section">
           <div class="form-inner">
-            <p *ngIf="selectedType === 'daily'">
+            <p *ngIf="selectedType === 'daily' && !showConfirmation">
               Correctly fill the following to pay for
               <strong>Daily Parking</strong>
             </p>
@@ -47,9 +46,53 @@
               {{ selectedType }} parking.
             </p>
 
-            <!-- Form shown only if it's Daily or user is logged in -->
+            <!-- Confirmation screen -->
+            <!-- Confirmation screen -->
+            <div *ngIf="showConfirmation && !showPaymentOptions">
+              <p>Please confirm your details below:</p>
+              <div class="detail">
+                <strong>Vehicle Number Plate</strong>
+                <div>{{ vehicleNumber }}</div>
+              </div>
+              <div class="detail">
+                <strong>Vehicle Type</strong>
+                <div>{{ vehicleType }}</div>
+              </div>
+              <div class="detail">
+                <strong>Parking Zone</strong>
+                <div>{{ parkingZone }}</div>
+              </div>
+
+              <div class="charges-row">
+                <div><strong>Total:</strong></div>
+                <div class="charges-right">
+                  <p>Ksh 300.00</p>
+                </div>
+              </div>
+
+              <button type="button" class="next-btn" (click)="onPay()">
+                ➜ Pay
+              </button>
+            </div>
+
+            <!-- Payment options screen -->
+            <div *ngIf="showPaymentOptions" class="payment-selection">
+              <h2>Payment Selection</h2>
+              <p>Please choose your preferred mode of payment</p>
+              <div class="payment-options">
+                <div class="payment-option">🇰🇪 M-Pesa</div>
+                <div class="payment-option">📱 Airtel Money</div>
+                <div class="payment-option">🏦 EazzyPay</div>
+                <div class="payment-option">💸 PesaLink</div>
+                <div class="payment-option">🏛 Bank Deposit</div>
+              </div>
+            </div>
+
+            <!-- Form before confirmation -->
             <form
-              *ngIf="selectedType === 'daily' || isLoggedIn"
+              *ngIf="
+                !showConfirmation && (selectedType === 'daily' || isLoggedIn)
+              "
               (ngSubmit)="submitForm()"
             >
               <label>Enter Vehicle Number Plate</label>
@@ -95,3 +138,9 @@
     </div>
   </div>
 </main>
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2025 Parkese. All rights reserved.</p>
+    <div class="social-icons"></div>
+  </div>
+</footer>

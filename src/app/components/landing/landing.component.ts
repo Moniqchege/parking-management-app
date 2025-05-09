@@ -15,6 +15,10 @@ export class LandingComponent {
   vehicleNumber = '';
   parkingZone = '';
   vehicleType = '';
+  showConfirmation = false;
+  showPaymentOptions = false;
+
+  
 
   @Output() triggerLogin = new EventEmitter<void>();
 
@@ -42,6 +46,10 @@ export class LandingComponent {
   sidebarOpen = false;
   toggleClicked = false;
 
+  onPay(){
+    this.showPaymentOptions = true;
+  }
+
   selectParkingType(type: string) {
     if ((type === 'seasonal' || type === 'reserved') && !this.isLoggedIn) {
       this.triggerLogin.emit(); // 🔥 Notify AppComponent to open the login modal
@@ -49,6 +57,7 @@ export class LandingComponent {
     }
     this.selectedType = type;
     this.sidebarOpen = false;
+    this.showConfirmation = false;
   }
 
   getHeading() {
@@ -87,15 +96,15 @@ export class LandingComponent {
   submitForm() {
     const plateRegex = /^K[A-Z]{2} \d{3}[A-Z]$/;
     if (!plateRegex.test(this.vehicleNumber)) {
-      alert('Enter a valid Kenyan plate number (e.g., KAA 123A)');
+      alert('Enter a valid plate number (e.g., KAA 123A)');
       return;
     }
 
-    if (!this.vehicleType) {
-      alert('Please select a vehicle type.');
+    if (!this.vehicleType || !this.parkingZone) {
+      alert('Please select both vehicle type and parking zone.');
       return;
     }
 
-    console.log('Submitted:', this.vehicleNumber, this.parkingZone, this.vehicleType);
+    this.showConfirmation = true;
   }
 }
