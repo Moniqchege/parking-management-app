@@ -245,10 +245,9 @@ form button:hover {
 }
 
 .next-btn:hover {
-  background-color: #1565c0;
+  background-color: #2e7d32;
 }
 
-/* Payment section */
 .payment-selection {
   padding: 20px;
 }

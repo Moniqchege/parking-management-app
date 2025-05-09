@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './landing.component.html',
-  styleUrl: './landing.component.css'
+  styleUrl: './landing.component.css',
 })
 export class LandingComponent {
   selectedType = 'daily';
@@ -18,8 +18,6 @@ export class LandingComponent {
   showConfirmation = false;
   showPaymentOptions = false;
 
-  
-
   @Output() triggerLogin = new EventEmitter<void>();
 
   zones = [
@@ -27,7 +25,7 @@ export class LandingComponent {
     'Jade Plaza – Westlands',
     'Fortune Square – Upper Hill',
     'Sapphire Heights – Kilimani',
-    'Zenith Arcade – Parklands'
+    'Zenith Arcade – Parklands',
   ];
 
   vehicleTypes = [
@@ -40,19 +38,19 @@ export class LandingComponent {
     'Minibus',
     'Bus',
     'Truck',
-    'Tuk Tuk'
+    'Tuk Tuk',
   ];
 
   sidebarOpen = false;
   toggleClicked = false;
 
-  onPay(){
+  onPay() {
     this.showPaymentOptions = true;
   }
 
   selectParkingType(type: string) {
     if ((type === 'seasonal' || type === 'reserved') && !this.isLoggedIn) {
-      this.triggerLogin.emit(); // 🔥 Notify AppComponent to open the login modal
+      this.triggerLogin.emit();
       return;
     }
     this.selectedType = type;
@@ -62,10 +60,14 @@ export class LandingComponent {
 
   getHeading() {
     switch (this.selectedType) {
-      case 'daily': return 'Daily Parking';
-      case 'seasonal': return 'Seasonal Parking';
-      case 'reserved': return 'Reserved Parking';
-      default: return '';
+      case 'daily':
+        return 'Daily Parking';
+      case 'seasonal':
+        return 'Seasonal Parking';
+      case 'reserved':
+        return 'Reserved Parking';
+      default:
+        return '';
     }
   }
 
